@@ -21,8 +21,8 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 jwt:
-  secret: LibraryManagementSystemSecretKey2024VeryLongSecretKeyForJWT
-  expiration: 86400000
+  secret: ${JWT_SECRET:LibraryManagementSystemSecretKey2024VeryLongSecretKeyForJWT}
+  expiration: ${JWT_EXPIRATION:86400000}
 
 logging:
   level:
