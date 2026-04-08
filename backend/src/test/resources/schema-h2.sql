@@ -1,0 +1,62 @@
+-- H2数据库测试用表结构
+
+DROP TABLE IF EXISTS operation_log;
+DROP TABLE IF EXISTS borrow_record;
+DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    role TINYINT NOT NULL DEFAULT 0,
+    status TINYINT NOT NULL DEFAULT 1,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE book (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    isbn VARCHAR(20) NOT NULL UNIQUE,
+    title VARCHAR(200) NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    publisher VARCHAR(100),
+    category VARCHAR(50),
+    description TEXT,
+    cover_url VARCHAR(500),
+    total_count INT NOT NULL DEFAULT 1,
+    available_count INT NOT NULL DEFAULT 1,
+    is_new TINYINT NOT NULL DEFAULT 0,
+    publish_date DATE,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted TINYINT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE borrow_record (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    book_id BIGINT NOT NULL,
+    borrow_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    due_time TIMESTAMP NOT NULL,
+    return_time TIMESTAMP,
+    status TINYINT NOT NULL DEFAULT 0,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE operation_log (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    username VARCHAR(50),
+    operation VARCHAR(100) NOT NULL,
+    method VARCHAR(200),
+    params TEXT,
+    ip VARCHAR(50),
+    status TINYINT NOT NULL DEFAULT 1,
+    error_msg TEXT,
+    cost_time BIGINT,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
